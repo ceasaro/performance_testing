@@ -12,14 +12,16 @@ class PostgresDB(AbstractPerformanceTestDb):
         return Measurement.objects.using(self.db_name).delete()
 
     def insert_data(self, data):
+        measurements = []
         for item in data:
-            m = Measurement(
+            measurements.append(Measurement(
                 timestamp=timestamp_to_datetime(item.get('timestamp')),
                 sensor_uuid=item.get('sensor_uuid'),
                 value=item.get('value'),
                 origin_value=item.get('origin_value'),
-            )
-            m.save(using=self.db_name)
+            ))
+
+        Measurement.objects.using(self.db_name).bulk_create(measurements)
 
     def print_data(self):
         for m in Measurement.objects.using(self.db_name):

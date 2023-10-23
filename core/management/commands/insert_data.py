@@ -26,14 +26,13 @@ class Command(BaseCommand):
         dbs_to_test = [MongoDB, PostgresDB]
 
         for db_class in dbs_to_test:
+            print(f"Performance testing {db_class}")
             db_instance = db_class()
-            print(f"Clean all data in db {db_class}")
             db_instance.clean_data()
 
-            print(f'Insert {len(data)} data entries into {db_class}.')
             duration = elapsed_time(db_instance.insert_data, data)
-            print(f"Insertion took {duration} time")
+            print(f"Insertion of {len(data)} data entries took {duration} time")
 
             # print(f'Data in {db_class}:')
             # db_instance.print_data()
-
+            print('--------------------------------\n')

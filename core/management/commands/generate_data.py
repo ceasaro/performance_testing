@@ -17,8 +17,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         sensor_uuid_count = 3
-        measurements = 10
+        measurements = 1000
         start_date = str_to_datetime("2023-01-01 00:00:00")
-        hour_count = 10
-        data_entries = generate_data(measurements, sensor_uuid_count, start_date, hour_count)
+        data_entries = generate_data(measurements, sensor_uuid_count, start_date)
         print(json.dumps({"data": data_entries}))

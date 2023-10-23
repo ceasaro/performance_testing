@@ -23,6 +23,16 @@ class PostgresDB(AbstractPerformanceTestDb):
 
         Measurement.objects.using(self.db_name).bulk_create(measurements)
 
+    def get_values(self, sensor_uuid=None, start=None, end=None):
+        measurements = Measurement.objects.using(self.db_name)
+        if sensor_uuid:
+            measurements = measurements.filter(sensor_uuid=sensor_uuid)
+        if start:
+            measurements = measurements.filter(timestamp__gte=start)
+        if end:
+            measurements = measurements.filter(timestamp__lte=end)
+        return [m.value for m in measurements]
+
     def print_data(self):
         for m in Measurement.objects.using(self.db_name):
             print(m)

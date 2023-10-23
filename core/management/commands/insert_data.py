@@ -26,7 +26,7 @@ class Command(BaseCommand):
         dbs_to_test = [MongoDB, PostgresDB]
 
         for db_class in dbs_to_test:
-            print(f"Performance testing {db_class}")
+            print(f"Insertion performance testing {db_class}")
             db_instance = db_class()
             db_instance.clean_data()
 

@@ -37,6 +37,18 @@ class MongoDB(AbstractPerformanceTestDb):
                 'origin_value': item.get('origin_value'),
             })
 
+    def get_values(self, sensor_uuid=None, start=None, end=None):
+        query = {}
+        timestamp_filter = {}
+        if start:
+            timestamp_filter["$gte"] = start
+        if end:
+            timestamp_filter["$lte"] = end
+        if timestamp_filter:
+            query["timestamp"] = timestamp_filter
+
+        return [m.get('value') for m in self.collection.find(query)]
+
     def print_data(self):
         for document in self.collection.find():
             print(document)

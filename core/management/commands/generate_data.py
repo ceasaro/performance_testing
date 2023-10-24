@@ -12,12 +12,11 @@ class Command(BaseCommand):
     help = "Management command for testing purposes."
 
     def add_arguments(self, parser) -> None:
-        # parser.add_argument("file_name", type=str)
+        parser.add_argument("-m", "--measurements", type=int)
         pass
 
-    def handle(self, *args, **options):
+    def handle(self, measurements, *args, **options):
         sensor_uuid_count = 3
-        measurements = 1000
         start_date = str_to_datetime("2023-01-01 00:00:00")
         data_entries = generate_data(measurements, sensor_uuid_count, start_date)
         print(json.dumps({"data": data_entries}))

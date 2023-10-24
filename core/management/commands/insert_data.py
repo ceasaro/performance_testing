@@ -4,6 +4,7 @@ from django.core.management import BaseCommand
 
 from core.db.mongo import MongoDB
 from core.db.postgres import PostgresDB
+from core.management.commands.config import DATABASES_TO_TEST
 from performance_testing.utils import elapsed_time
 
 SENSOR_UUID = "d7f46f7a-5658-4c26-b80b-9b3a3dcfb6d3"
@@ -23,9 +24,7 @@ class Command(BaseCommand):
         json_data = json.loads(f.read())
         data = json_data.get("data")
 
-        dbs_to_test = [MongoDB, PostgresDB]
-
-        for db_class in dbs_to_test:
+        for db_class in DATABASES_TO_TEST:
             print(f"Insertion performance testing {db_class}")
             db_instance = db_class()
             db_instance.clean_data()

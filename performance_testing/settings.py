@@ -75,20 +75,21 @@ WSGI_APPLICATION = "performance_testing.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+DATABASE_NAME = "performance_test_db"
 DATABASES = {
     "default": {},
     "postgres": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": "performance_test_db",
-        "USER": "",
-        "PASSWORD": "",
+        "NAME": DATABASE_NAME,
+        "USER": "postgres",
+        "PASSWORD": "welcome",
         "HOST": "127.0.0.1",
-        "PORT": "5433",
+        "PORT": "5454",
     }
 }
 
 MONGO_DB = {
-    "DB_NAME": "performance_test_db",
+    "DB_NAME": DATABASE_NAME,
     "HOST": "localhost",
     "PORT": 27017,
     "USERNAME": "",

@@ -8,5 +8,8 @@ class AbstractPerformanceTestDb:
     def get_values(self, sensor_uuid=None, start=None, end=None):
         raise NotImplemented
 
+    def aggregate_per_day(self, sensor_uuid=None, start=None, end=None):
+        raise NotImplemented
+
     def print_data(self):
         raise NotImplemented

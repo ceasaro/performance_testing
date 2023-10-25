@@ -20,7 +20,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         query = {
             'start': str_to_datetime("2023-01-01 00:00:00"),
-            'end': str_to_datetime("2023-03-01 00:00:00"),
+            'end': str_to_datetime("2023-07-01 00:00:00"),
         }
         print(f"Query: {query}")
         for key, value in query.items():
@@ -35,9 +35,13 @@ class Command(BaseCommand):
             print(f"query performance testing {db_class}")
             db_instance = db_class()
 
-            duration, resp = elapsed_time(db_instance.get_values, **query)
+            # duration, resp = elapsed_time(db_instance.get_values, **query)
+            duration, resp = elapsed_time(db_instance.aggregate_per_day, **query)
             print(f"count={len(resp)}")
             print(f"duration={duration}")
+
+            # for m in resp:
+            #     print(m)
 
             # print(f'Data in {db_class}:')
             # db_instance.print_data()

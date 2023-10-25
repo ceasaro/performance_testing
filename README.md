@@ -1,7 +1,7 @@
 # performance_testing
 performance_testing
 
-How to use:
+##How to use:
 1) run databases using docker compose: `docker-compose -f setup/docker-compose/docker-compose-local.yml up`
 2) create databases:
    1) MongoDB: run MongoDB and execute: `use performance_test_db`
@@ -10,3 +10,9 @@ How to use:
 4) Generate some data to insert into the databases, so we have the same data for all databases. `./manage.py generate_data -m 1000 > ./generated_data.json`
 5) Insert the generated data into all databases: `./manage.py insert_data ./generated_data.json`
 6) Run performance tests: `./manage.py query_data`
+
+
+## Test a new, not supported, database
+1) Create a class in `core.db` that extends the `core.db.base.AbstractPerformanceTestDb` and implement the abstract methods.
+2) Add this class to this list `core.management.commands.config.DATABASES_TO_TEST`
+3) run the above *How to use* steps.

@@ -37,11 +37,16 @@ class MongoDB(AbstractPerformanceTestDb):
                 'origin_value': item.get('origin_value'),
             })
 
-    def get_values(self, sensor_uuid=None, start=None, end=None):
+    def get_values(self, sensor_uuid=None, start=None, end=None, sort=False):
         query = self._query_filter(sensor_uuid, start, end)
-        return [m.get('value') for m in self.collection.find(query)]
+        measurements_data = self.collection.find(query)
+        if sort:
+            print("SORTING BY DATE")
+            measurements_data.sort("timestamp", pymongo.DESCENDING)
 
-    def aggregate_per_day(self, sensor_uuid=None, start=None, end=None):
+        return [m.get('value') for m in measurements_data]
+
+    def aggregate_per_day(self, sensor_uuid=None, start=None, end=None, sort=False):
         query = self._query_filter(sensor_uuid, start, end)
 
         aggregated_data = self.collection.aggregate([

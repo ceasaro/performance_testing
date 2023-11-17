@@ -25,11 +25,14 @@ class PostgresDB(AbstractPerformanceTestDb):
 
         Measurement.objects.using(self.db_name).bulk_create(measurements)
 
-    def get_values(self, sensor_uuid=None, start=None, end=None):
+    def get_values(self, sensor_uuid=None, start=None, end=None, sort=False):
         measurements = self._filter(sensor_uuid, start, end)
+        if sort:
+            print("SORTING BY DATE")
+            measurements = measurements.order_by('timestamp')
         return [{'timestamp': m.timestamp, 'value': m.value} for m in measurements]
 
-    def aggregate_per_day(self, sensor_uuid=None, start=None, end=None):
+    def aggregate_per_day(self, sensor_uuid=None, start=None, end=None, sort=False):
         measurements = self._filter(sensor_uuid, start, end)
         measurements = measurements.extra({'day': "date(timestamp)"}). \
             values('day'). \
